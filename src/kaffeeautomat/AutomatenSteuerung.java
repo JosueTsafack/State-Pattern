@@ -186,18 +186,16 @@ public class AutomatenSteuerung implements KaffeeAutomat {
 		if(produkt instanceof Kaffee){
 	        
 	        mengeKaffee--;
-            protokoll.addProdukt(this.produkt);
             
 	    }else if(produkt instanceof Tee){
 	        
 	        mengeTee--;
-	        protokoll.addProdukt(this.produkt);
 	        
 	    }else if(produkt instanceof Kakao){
 	        
 	        mengeKakao--;
-	        protokoll.addProdukt(this.produkt);
 	    }
+		 protokoll.addProdukt(this.produkt);
 	}
 
 	@Override
