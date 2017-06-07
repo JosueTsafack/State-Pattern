@@ -20,10 +20,13 @@ public class AutomatMain {
 		System.out.println(a.getZustand());
 		System.out.println(a.getGeld());
 		a.waehleProdukt("Kaffee");
+		a.waehleProdukt("Kakao");
 		a.bezahleBetrag(115);
-//		a.bezahleBetrag(20);
-//		System.out.println(a.getZustand());
-//		System.out.println(a.getGeld());
+		System.out.println(a.getGeld());
+		System.out.println(a.getZustand());
+		a.bezahleBetrag(20);
+		System.out.println(a.getGeld());
+		System.out.println(a.getZustand());
 //		System.out.println("---------");
 //		System.out.println(a.getZustand());
 		

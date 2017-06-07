@@ -43,9 +43,9 @@ public class AutomatenSteuerung implements KaffeeAutomat {
 				}
 	
 		}else if (zustand == Zustand.ZAPFEN) {
-			System.out.println("Beim Zapfen kÃ¶nnen Sie kein Geld einwerfen");
+			System.out.println("Beim Zapfen können Sie kein Geld einwerfen");
 		}else if(zustand== Zustand.AUSVERKAUFT){
-			System.out.println("Sie kÃ¶nnen keine Geld einwerfen, das Produkt ist ausverkauft");
+			System.out.println("Sie können keine Geld einwerfen, das Produkt ist ausverkauft");
 		}else if(zustand==Zustand.KEINE_MÜNZE){
 			System.out.println("Sie müssen zuerst ein  Produkt wählen");
 		}
@@ -73,7 +73,7 @@ public class AutomatenSteuerung implements KaffeeAutomat {
 	}
 	public Produkt getProdukt (String produkt ){
 		
-		if (produkt.equals("kaffee") ){
+		if (produkt.equalsIgnoreCase("Kaffee") ){
 			if (this.getMengeKaffee() > 0) {
 				
 				zustand=Zustand.IS_GEWAEHLT;
@@ -85,7 +85,7 @@ public class AutomatenSteuerung implements KaffeeAutomat {
 			}
 			return null;
 			
-		}else if(produkt.equals("Kakao")){
+		}else if(produkt.equalsIgnoreCase("Kakao")){
 			if (this.getMengeKaffee() > 0) {
 				
 				zustand=Zustand.IS_GEWAEHLT;
@@ -96,7 +96,7 @@ public class AutomatenSteuerung implements KaffeeAutomat {
 				zustand = Zustand.AUSVERKAUFT;
 			}
 			
-		}else if(produkt.equals("Tee")){
+		}else if(produkt.equalsIgnoreCase("Tee")){
 			if (this.getMengeKaffee() > 0) {
 				
 				zustand=Zustand.IS_GEWAEHLT;
@@ -124,7 +124,7 @@ public class AutomatenSteuerung implements KaffeeAutomat {
 			produkt.wähleOptionen(option);
 			
 		}else {
-			System.out.println("Sie mÃ¼ssen zuerst ein Produkt wÃ¤hlen...");
+			System.out.println("Sie müssen zuerst ein Produkt wählen...");
 		}
 
 	}
@@ -134,47 +134,43 @@ public class AutomatenSteuerung implements KaffeeAutomat {
 
 		int wechselGeld = 0;
 		
-
 			if(zustand==Zustand.HAT_MÜNZE || zustand==Zustand.ZAPFEN){
+				
 				zustand=Zustand.KEINE_MÜNZE;
+				
 				if(geld>=produkt.getPreis()){
-				    wechselGeld=this.geld-produkt.getPreis();
+				    wechselGeld=wechselGeld+(this.geld-produkt.getPreis());
 				
 				    this.geld=0;
 				    
-				}else{
-					wechselGeld=geld;
+				}else if(geld<produkt.getPreis()){
+					wechselGeld+=geld;
 					geld=0;
-					return wechselGeld;
 				}
 				
-				return wechselGeld;
-				
 			}else if(zustand==Zustand.KEINE_MÜNZE){
-			    System.out.println("Sie haben keine MÃœNZE eingeworfen");
+			    System.out.println("Sie haben keine MÜNZE eingeworfen");
+			}else if(zustand==Zustand.AUSVERKAUFT || zustand==Zustand.IS_GEWAEHLT){
+				System.out.println("Sie müssen zuerst Geld einzahlen");
 			}
 			
-			System.out.println("Anfrage nicht mÃ¶glich");
-		
-		
-		return 0;
+		return wechselGeld;
 	}
 
 	@Override
 	public int zapfeProdukt() {
-		
+
 		if(zustand==Zustand.ZAPFEN){
-		    
 		    this.reduziereMenge();
 		}else if(zustand==Zustand.HAT_MÜNZE){
 		    System.out.println("Es wird kein Produkt ausgegeben");
 		   
 		}else if(zustand==Zustand.IS_GEWAEHLT){
-		    System.out.println("Sie mÃ¼ssen zuerst Geld einzahlen");
+		    System.out.println("Sie muessen zuerst Geld einzahlen");
 		    
 		}else if (zustand==Zustand.KEINE_MÜNZE || zustand==Zustand.AUSVERKAUFT){
 		    
-		    System.out.println("Anfrage nicht mÃ¶glich");   
+		    System.out.println("Anfrage nicht möglich");   
 		    return 0;
 		    
 		}
@@ -201,8 +197,8 @@ public class AutomatenSteuerung implements KaffeeAutomat {
 	@Override
 	public int abbruch() {
 	    
-		if(zustand== Zustand.ZAPFEN || zustand==Zustand.AUSVERKAUFT){
-			System.out.println("Anfrage nicht mÃ¶glich");
+		if(zustand== Zustand.ZAPFEN || zustand==Zustand.AUSVERKAUFT || zustand==Zustand.KEINE_MÜNZE){
+			System.out.println("Anfrage nicht möglich");
 			return 0;
 		}
 		
@@ -264,11 +260,11 @@ public class AutomatenSteuerung implements KaffeeAutomat {
  * 
  * 1-Dieses Design ist nicht gerade besonders objektorientiert
  * 2-Wir haben hier nicht gekapselt, was variiert
- * 3-Wenn Code hinzugefÃ¼ht wird, verursacht das mit groÃŸer Wahrscheinlichkeit Programmfehler
- * 4-Keine leichte Ã„nderbarkeit und Erweiterbarkeit ermÃ¶glich
+ * 3-Wenn Code hinzugefuegt wird, verursacht das mit groesser Wahrscheinlichkeit Programmfehler
+ * 4-Keine leichte Ã„nderbarkeit und Erweiterbarkeit ermoeglich
  * 5-Open-Closed Prinzip ist verletzt
  * 6-das Verhalten eines Zustand ist nicht in seiner eigener Klasse lokalisiert
- * 7-keine VerstÃ¤ndlichkeit
- * 8-Die ZustandsÃ¼bergÃ¤nge sind nicht explizit
+ * 7-keine Verstaendlichkeit
+ * 8-Die Zustandsuebergaenge sind nicht explizit
  * 
  **/
