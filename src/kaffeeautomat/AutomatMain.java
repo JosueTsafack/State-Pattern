@@ -4,8 +4,7 @@ public class AutomatMain {
 
 	public static void main(String[] args) {
 		AutomatenSteuerung a = new AutomatenSteuerung();
-		
-		
+	
 		a.waehleProdukt("Kaffee");
 		System.out.println(a.getZustand());
 		a.waehleOption("Milch");
